@@ -37,4 +37,4 @@ Dependencies are inferred from imports, not a recovered lockfile. Compatibility 
 This repository preserves coursework for review. It is not a production deployment. Existing interface images are retained as coursework assets; no new reuse licence is assigned to third-party material.
 
 ## 中文简介
-学生论坛课业，展示 Flask 路由、关系数据库、登录会话及网页开发。已清除数据库密码；保留原作并明确记录尚待修复的问题。
+展示 Flask 路由、关系数据库、登录会话及网页开发。已清除数据库密码；保留原作并明确记录尚待修复的问题。
