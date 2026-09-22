@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+{% endblock %}
+
+{% block main %}
+    <div class="container marketing topic-list">
+        <ul>
+            {% for topic in topics %}
+                <div class="row">
+                  <div class="col-lg-4 topic-group">
+                    <li>
+                    <div class="avatar-group">
+                        <img src="{{ url_for('static', filename='images/p1.png') }}" alt="photo" class="avatar rounded-circle" >
+                    </div>
+                    <div class="topic-group">
+                        <p class="topic-title"><a href="{{ url_for('detail', topic_id=topic.id) }}">{{ topic.title }}</a></p>
+                        <p class="topic-content">{{ topic.content }}</p>
+                        <div class="topic-info">
+                            <span class="topic-author">{{ topic.author.username | default('noname', true) }}</span>
+                            {% if topic.create_time %}<span class="topic-time">{{ topic.create_time  }}</span>{% endif %}
+                        </div>
+                    </div>
+                    </li>
+                  </div>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

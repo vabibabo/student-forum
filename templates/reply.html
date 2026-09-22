@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Topic{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/detail.css') }}">
+{% endblock %}
+
+{% block main %}
+    <div class="claim-detail">
+        <h3 class="page-title">{{ claim.title }}</h3>
+        <p class="claim-info">
+            <span class="claim-author">Author：{{ claim.author.username | default('noname', true) }}</span>
+            <span class="claim-time">Time：{{ claim.create_time }}</span>
+        </p>
+        <hr>
+        <div class="claim-content">
+            {{ claim.content }}
+        </div>
+        <hr>
+        <div class="reply">
+            <h4>Reply:（{{ claim.replies | count }}）</h4>
+            <form action="{{ url_for('add_reply',claim_id=claim.id) }}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="reply_content" placeholder="Please write reply">
+                    <input type="hidden" name="claim_id" value="{{ claim.id }}">
+                </div>
+                <div class="form-group" style="text-align: right">
+                    <button type="submit" class="btn btn-primary"> Post Reply</button>
+                </div>
+            </form>
+        </div>
+       <div>
+            <ul class="reply-list">
+                {% for claim in claim.relies %}
+                <li>
+                    <div class="user-info">
+                        <img src="{{ url_for('static', filename='images/p1.png') }}" alt="photo" class="avatar">
+                        <span class="username">{{ reply.author.username | default('noname', true) }}</span>
+                        <span class="create-time">{{ reply.create_time }}</span>
+                    </div>
+                    <p class="reply-content">{{ reply.content }}</p>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

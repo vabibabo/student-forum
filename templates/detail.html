@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/detail.css') }}">
+{% endblock %}
+
+{% block main %}
+    <div class="topic-detail">
+        <h3 class="page-title">{{ topic.title }}</h3>
+        <p class="topic-info">
+            <span class="topic-author">Author：{{ topic.author.username | default('noname', true) }}</span>
+            <span class="topic-time">Time：{{ topic.create_time }}</span>
+        </p>
+        <hr>
+        <div class="topic-content">
+            {{ topic.content }}
+        </div>
+        <hr>
+        <div class="claim">
+            <h4>Claim:（{{ topic.claims | count }}）</h4>
+            <form action="{{ url_for('add_claim',topic_id=topic.id) }}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="claim_title" placeholder="Please write title">
+                    <input type="text" class="form-control" name="claim_content" placeholder="Please write claim">
+                    <input type="hidden" name="topic_id" value="{{ topic.id }}">
+                </div>
+                <div class="form-group" style="text-align: right">
+                    <button type="submit" class="btn btn-primary"> Post Claim</button>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <div>
+            <ul class="claim-list">
+                {% for topic in topic.claims %}
+                <li>
+                    <div class="user-info">
+                        <img src="{{ url_for('static', filename='images/p1.png') }}" alt="photo" class="avatar">
+                        <span class="username">{{ claim.author.username | default('noname', true) }}</span>
+                        <span class="create-time">{{ claim.create_time }}</span>
+                        <button type="button" class="btn btn-primary"><a href="reply.html"> Reply</a></button>
+                    </div>
+                    <p class="claim-content">{{ claim.content }}</p>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

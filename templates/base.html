@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}Student Forum</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top text-dark">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header ">
+          <a class="navbar-brand" href="index.html">
+              <img class="logo" src="{{ url_for('static',filename='images/logo1.png') }}" alt="logo">
+          </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav my-2 justify-content-center my-md-0">
+            <li {% if request.path != '/topic/' %}class="active"{% endif %}>
+                <a href="{{ url_for('index') }}" class="nav-link" style="color: white; ">Home </a>
+            </li>
+            <li {% if request.path == '/topic/' %}class="active"{% endif %}>
+                <a href="{{ url_for('topic') }}" class="nav-link" style="color: white; ">Topic</a>
+            </li>
+          </ul>
+          <form action="{{ url_for('search') }}" method="get" class="navbar-form navbar-left">
+            <div class="form-group">
+              <input name="q" type="text" class="form-control" placeholder="Please enter keyword" value="{{ q }}">
+                <button type="submit" class="btn btn-success" style="color: white">Search</button>
+            </div>
+
+          </form>
+          <ul class="nav navbar-nav navbar-right my-2 justify-content-center my-md-0">
+            {% if user %}
+                <li><a href="#" class="nav-link" style="color: white; ">{{ user.username }}</a></li>
+                <li>
+                    <button type="button" class="btn btn-warning text-white"><a href="{{ url_for('logout') }}" class="nav-link" style="color: white; ">Logout</a></button></li>
+            {% else %}
+                <li>
+                    <button type="button" class="btn btn-primary text-white"><a href="{{ url_for('login') }}" class="nav-link" style="color: white;float: right; ">Login</a></button></li>
+                <li>
+                    <button type="button" class="btn btn-danger text-white"><a href="{{ url_for('regist') }}" class="nav-link" style="color: white;float: right;">Sign up</a></button></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="main">
+        {% block main %}{% endblock %}
+        {% block footer %}{% endblock %}
+    </div>
+</body>
+</html>
